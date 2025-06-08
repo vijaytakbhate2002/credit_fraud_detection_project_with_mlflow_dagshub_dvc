@@ -1,0 +1,16 @@
+artifact_uri: mlflow-artifacts:/917863397407543586/d026b1742344491d996429ae7e06fb4d/artifacts
+deleted_time: 1749391820770
+end_time: 1749391675147
+entry_point_name: ''
+experiment_id: '917863397407543586'
+lifecycle_stage: deleted
+run_id: d026b1742344491d996429ae7e06fb4d
+run_name: Logistic Regression Model
+run_uuid: d026b1742344491d996429ae7e06fb4d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1749391674856
+status: 4
+tags: []
+user_id: admin

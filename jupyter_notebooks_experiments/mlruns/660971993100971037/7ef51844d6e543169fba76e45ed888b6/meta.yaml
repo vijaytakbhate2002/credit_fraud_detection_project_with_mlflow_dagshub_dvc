@@ -1,0 +1,15 @@
+artifact_uri: file:///e:/WorkSpace/Complete_MLOps_Bootcamp_With_10_End_To_End_ML_Projects/7_credit_fraud_detection/jupyter_notebooks_experiments/mlruns/660971993100971037/7ef51844d6e543169fba76e45ed888b6/artifacts
+end_time: 1749389611474
+entry_point_name: ''
+experiment_id: '660971993100971037'
+lifecycle_stage: active
+run_id: 7ef51844d6e543169fba76e45ed888b6
+run_name: Logistic Regression Model
+run_uuid: 7ef51844d6e543169fba76e45ed888b6
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1749389577141
+status: 3
+tags: []
+user_id: admin
