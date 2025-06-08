@@ -1,0 +1,5 @@
+outs:
+- md5: 4548bb40d6db9a202b1a5d7604476b0f
+  size: 2897212
+  hash: md5
+  path: default_of_credit_card_clients.csv

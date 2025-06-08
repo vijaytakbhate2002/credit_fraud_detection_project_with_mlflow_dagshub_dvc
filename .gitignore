@@ -1,6 +1,4 @@
-.csv
-.PNG
-data\default_of_credit_card_clients.csv
-docs\Capture.PNG
-docs\mlflow.PNG
-docs\mlflow2.PNG
+data/*.csv
+data/default_of_credit_card_clients.csv
+jupyter_notebooks_experiments/feature_importances.csv
+.pkl
