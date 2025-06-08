@@ -1,4 +1,3 @@
 data/*.csv
-data/default_of_credit_card_clients.csv
-jupyter_notebooks_experiments/feature_importances.csv
+jupyter_notebooks_experiments/*.csv
 .pkl
