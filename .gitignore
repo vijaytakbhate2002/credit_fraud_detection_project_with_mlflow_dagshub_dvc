@@ -1,3 +1,4 @@
 data/*.csv
 jupyter_notebooks_experiments/*.csv
 .pkl
+app.log
