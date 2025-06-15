@@ -21,4 +21,4 @@ if __name__ == "__main__":
     
     data_dumper.save_df(pd.concat([X_processed, y_processed], axis=1))
     logging.info("Data processing is done and saved to the specified path...")
-    
+    print("Data processing is done and saved to the specified path...")
