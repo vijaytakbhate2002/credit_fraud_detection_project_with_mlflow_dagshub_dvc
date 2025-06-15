@@ -19,8 +19,12 @@ logging.basicConfig(
 
 class NullHandler(BaseEstimator, TransformerMixin):
 
-    def fit(self, X:pd.DataFrame, y:pd.Series) -> None:
-        self.df = pd.concat([X, y], axis='columns') if y is not None else X
+    def fit(self, X:pd.DataFrame, y:pd.Series=None) -> None:
+        if y is not None and isinstance(y, pd.Series):
+            self.df = pd.concat([X, y], axis='columns') if y is not None else X
+        else:
+            self.df = X.copy()
+
         if X.isnull().values.any():
             logging.warning("Null values found in the DataFrame.")
         else:
@@ -29,7 +33,7 @@ class NullHandler(BaseEstimator, TransformerMixin):
 
 
 
-    def transform(self, X: pd.DataFrame, y: pd.Series) -> tuple:
+    def transform(self, X: pd.DataFrame, y: pd.Series=None) -> tuple:
         """
         Transform method fills null values with 0 and return X, y as tuple"""
         logging.info("Removing null valued rows from X...")
@@ -58,7 +62,7 @@ class DataProcessor(BaseEstimator, TransformerMixin):
 
 
 
-    def fit(self, X: pd.DataFrame, y: pd.Series) -> None:
+    def fit(self, X: pd.DataFrame, y: pd.Series=None) -> None:
         logging.info("Fitting DataProcessor...")
 
         if self.normalisation_strategy == 'minmax':
@@ -72,12 +76,12 @@ class DataProcessor(BaseEstimator, TransformerMixin):
 
 
 
-    def transform(self, X: pd.DataFrame, y: pd.Series) -> tuple:
+    def transform(self, X: pd.DataFrame, y: pd.Series=None) -> tuple:
         """
         Transform method scales the DataFrame using MinMaxScaler and returns X, y as tuple.
         If y is provided, it will be returned as well."""
         self.X = X.copy()
-        self.y = y.copy() if y is not None else None
+        self.y = y.copy() if y is not None or isinstance(y, pd.Series) else None
         for col in self.normalisation_columns:
             self.X[col] = self.scaler.fit_transform(self.X[[col]])
         logging.info(f"Normalised columns: {self.normalisation_columns} using {self.normalisation_strategy} strategy.")
@@ -92,22 +96,26 @@ class DataSampler(BaseEstimator, TransformerMixin):
 
 
 
-    def fit(self, X: pd.DataFrame, y: pd.Series) -> None:
+    def fit(self, X: pd.DataFrame, y: pd.Series=None) -> None:
         logging.info("Fitting DataSampling...")
         self.smote = SMOTE(random_state=self.random_state)
         return self
 
 
 
-    def transform(self, X:pd.DataFrame, y:pd.Series) -> tuple:
+    def transform(self, X:pd.DataFrame, y:pd.Series=None) -> tuple:
         """
         Oversample the minority class in training data using SMOTE.
         This method returns the resampled DataFrame and Series."""
         logging.info("Transforming DataSampling...")
         
-        X_train_resampled, y_train_resampled = self.smote.fit_resample(X, y)
+        if y is not None or isinstance(y, pd.Series):
+            X_train_resampled, y_train_resampled = self.smote.fit_resample(X, y)
         
-        logging.info(f"Class distribution before resampling: {pd.Series(y).value_counts(normalize=True)}")
-        logging.info(f"Class distribution after resampling: {pd.Series(y_train_resampled).value_counts(normalize=True)}")
+            logging.info(f"Class distribution before resampling: {pd.Series(y).value_counts(normalize=True)}")
+            logging.info(f"Class distribution after resampling: {pd.Series(y_train_resampled).value_counts(normalize=True)}")
 
-        return X_train_resampled, y_train_resampled
+            return X_train_resampled, y_train_resampled
+        else:
+            logging.warning("No target variable provided, returning original DataFrame...")
+            return X, None

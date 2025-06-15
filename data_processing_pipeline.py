@@ -31,7 +31,7 @@ class DataProcessingPipeline:
             if hasattr(step, 'transform'):
                 X, y = step.transform(X, y)
             else:
-                raise ValueError(f"Step {name} does not have a transform method.")
+                logging.warning(f"Step {name} does not have a transform method.")
         return X, y
 
     def fit_transform(self, X: pd.DataFrame, y: pd.Series = None) -> tuple:
@@ -51,7 +51,6 @@ def build_data_processing_pipeline(normalisation_columns:list, normalisation_str
     """
     logging.info("Building data processing pipeline...")
     
-    # Define the steps in the pipeline
     steps = [
        ('null_handler', NullHandler()),
         ('data_processor', DataProcessor(normalisation_columns=normalisation_columns, 
@@ -59,7 +58,6 @@ def build_data_processing_pipeline(normalisation_columns:list, normalisation_str
        ('data_sampler', DataSampler())
     ]
     
-    # Create the pipeline
     pipeline = DataProcessingPipeline(steps=steps)
     
     logging.info("Data processing pipeline built successfully.")
